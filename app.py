@@ -1,6 +1,6 @@
 import platform
 import psutil
-
+import streamlit as st
 def get_cpu_info():
     info = {
         "Processor": platform.processor(),
@@ -13,4 +13,4 @@ def get_cpu_info():
     return info
 
 if __name__ == "__main__":
-    print(get_cpu_info())
+    st.write(get_cpu_info())
