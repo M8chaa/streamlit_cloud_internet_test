@@ -1,22 +1,16 @@
-import streamlit as st
-import speedtest
+import platform
+import psutil
 
-def test_internet_speed():
-    s = speedtest.Speedtest()
-    s.get_best_server()
-    download_speed = s.download() / 1024 / 1024  # Convert to Mbps
-    upload_speed = s.upload() / 1024 / 1024  # Convert to Mbps
-    return download_speed, upload_speed
-
-def main():
-    st.title('Internet Speed Test')
-
-    if st.button('Test Internet Speed'):
-        with st.spinner('Testing...'):
-            download_speed, upload_speed = test_internet_speed()
-        st.success('Test completed')
-        st.write(f"Download speed: {download_speed:.2f} Mbps")
-        st.write(f"Upload speed: {upload_speed:.2f} Mbps")
+def get_cpu_info():
+    info = {
+        "Processor": platform.processor(),
+        "Physical cores": psutil.cpu_count(logical=False),
+        "Total cores": psutil.cpu_count(logical=True),
+        "Max Frequency": f"{psutil.cpu_freq().max:.2f} MHz",
+        "Min Frequency": f"{psutil.cpu_freq().min:.2f} MHz",
+        "Current Frequency": f"{psutil.cpu_freq().current:.2f} MHz",
+    }
+    return info
 
 if __name__ == "__main__":
-    main()
+    print(get_cpu_info())
